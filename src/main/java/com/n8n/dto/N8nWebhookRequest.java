@@ -1,0 +1,19 @@
+package com.n8n.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Map;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class N8nWebhookRequest {
+    private String webhookPath;
+    private Map<String, Object> data;
+    private Map<String, String> headers;
+    private String method;
+}
