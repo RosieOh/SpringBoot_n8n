@@ -1,0 +1,159 @@
+{
+  "name": "Spring Boot API Integration Examples",
+  "description": "Spring Boot n8n Integration API 사용 예시",
+  "workflows": [
+    {
+      "name": "Example 1: Call Spring Boot API",
+      "description": "n8n에서 Spring Boot API 호출하기",
+      "nodes": [
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/public/process",
+            "options": {},
+            "bodyParametersJson": "{\n  \"data\": \"{{ $json.message }}\"\n}"
+          },
+          "name": "HTTP Request",
+          "type": "n8n-nodes-base.httpRequest",
+          "position": [250, 300]
+        }
+      ]
+    },
+    {
+      "name": "Example 2: Receive Webhook from Spring Boot",
+      "description": "Spring Boot API에서 Webhook 받기",
+      "nodes": [
+        {
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "spring-boot-webhook",
+            "responseMode": "responseNode"
+          },
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "webhookId": "abc123",
+          "position": [250, 300]
+        },
+        {
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "{\n  \"success\": true,\n  \"message\": \"Webhook received\",\n  \"data\": {{ $json }}\n}"
+          },
+          "name": "Respond to Webhook",
+          "type": "n8n-nodes-base.respondToWebhook",
+          "position": [450, 300]
+        }
+      ]
+    },
+    {
+      "name": "Example 3: Complete Integration Flow",
+      "description": "완전한 통합 플로우 예시",
+      "nodes": [
+        {
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "integration-webhook"
+          },
+          "name": "Receive Data",
+          "type": "n8n-nodes-base.webhook",
+          "position": [250, 300]
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/public/validate",
+            "options": {},
+            "bodyParametersJson": "{{ $json }}"
+          },
+          "name": "Validate with Spring Boot",
+          "type": "n8n-nodes-base.httpRequest",
+          "position": [450, 300]
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/public/process",
+            "options": {},
+            "bodyParametersJson": "{{ $json }}"
+          },
+          "name": "Process with Spring Boot",
+          "type": "n8n-nodes-base.httpRequest",
+          "position": [650, 300]
+        }
+      ]
+    },
+    {
+      "name": "Example 4: Calculate with Spring Boot",
+      "description": "Spring Boot API로 계산하기",
+      "nodes": [
+        {
+          "parameters": {},
+          "name": "Start",
+          "type": "n8n-nodes-base.start",
+          "position": [250, 300]
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/public/calculate",
+            "options": {},
+            "bodyParametersJson": "{\n  \"operation\": \"add\",\n  \"num1\": 10,\n  \"num2\": 5\n}"
+          },
+          "name": "Calculate",
+          "type": "n8n-nodes-base.httpRequest",
+          "position": [450, 300]
+        }
+      ]
+    },
+    {
+      "name": "Example 5: User Management",
+      "description": "사용자 생성 및 조회",
+      "nodes": [
+        {
+          "parameters": {},
+          "name": "Start",
+          "type": "n8n-nodes-base.start",
+          "position": [250, 300]
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/public/users",
+            "options": {},
+            "bodyParametersJson": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\"\n}"
+          },
+          "name": "Create User",
+          "type": "n8n-nodes-base.httpRequest",
+          "position": [450, 200]
+        },
+        {
+          "parameters": {
+            "method": "GET",
+            "url": "=http://localhost:8080/api/public/users/{{ $json.data.id }}"
+          },
+          "name": "Get User",
+          "type": "n8n-nodes-base.httpRequest",
+          "position": [650, 200]
+        }
+      ]
+    }
+  ],
+  "instructions": {
+    "import": "n8n 워크플로우 임포트 방법",
+    "steps": [
+      "1. n8n 웹 인터페이스 접속",
+      "2. 좌측 메뉴에서 'Workflows' 클릭",
+      "3. 우측 상단 'Import from file' 또는 'Import from URL' 클릭",
+      "4. 위의 워크플로우 JSON을 복사하여 붙여넣기 또는 파일 업로드",
+      "5. 워크플로우가 임포트되면 각 노드의 설정 확인",
+      "6. Spring Boot API 서버가 실행 중인지 확인 (http://localhost:8080)",
+      "7. 워크플로우 활성화 및 테스트"
+    ]
+  },
+  "tips": {
+    "webhook_url": "Webhook URL은 n8n의 Webhook 노드를 클릭하면 확인 가능",
+    "authentication": "Public API는 인증 불필요, 다른 엔드포인트는 Basic Auth 필요 (admin/admin123)",
+    "testing": "각 HTTP Request 노드에서 'Test step' 버튼으로 개별 테스트 가능",
+    "error_handling": "Error Trigger 노드를 추가하여 에러 처리 로직 구현 가능"
+  }
+}
