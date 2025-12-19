@@ -1,0 +1,463 @@
+{
+  "info": {
+    "name": "n8n Integration API",
+    "description": "Spring Boot n8n Integration API 테스트 컬렉션",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. n8n Webhook Trigger",
+      "item": [
+        {
+          "name": "Trigger Webhook (Full)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"webhookPath\": \"/your-webhook-id\",\n  \"data\": {\n    \"message\": \"Hello from Postman\",\n    \"timestamp\": \"{{$timestamp}}\"\n  },\n  \"method\": \"POST\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/webhook/trigger",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "webhook", "trigger"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Trigger Webhook (Simple)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Simple webhook call\",\n  \"data\": \"test\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/webhook/simple/your-webhook-id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "webhook", "simple", "your-webhook-id"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Test Webhook",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/webhook/test/your-webhook-id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "webhook", "test", "your-webhook-id"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. n8n REST API",
+      "item": [
+        {
+          "name": "Get All Workflows",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/workflows",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "workflows"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Workflow by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/workflows/:workflowId",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "workflows", ":workflowId"],
+              "variable": [
+                {
+                  "key": "workflowId",
+                  "value": "1"
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Execute Workflow",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workflowId\": \"1\",\n  \"inputData\": {\n    \"key\": \"value\",\n    \"test\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/workflows/execute",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "workflows", "execute"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Execution Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/executions/:executionId",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "executions", ":executionId"],
+              "variable": [
+                {
+                  "key": "executionId",
+                  "value": "123"
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Activate Workflow",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/workflows/:workflowId/activate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "workflows", ":workflowId", "activate"],
+              "variable": [
+                {
+                  "key": "workflowId",
+                  "value": "1"
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deactivate Workflow",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/n8n/workflows/:workflowId/deactivate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "n8n", "workflows", ":workflowId", "deactivate"],
+              "variable": [
+                {
+                  "key": "workflowId",
+                  "value": "1"
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Public API (n8n에서 호출)",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/public/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "health"]
+            }
+          }
+        },
+        {
+          "name": "Process Data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": \"Sample data to process\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/public/process",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "process"]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/public/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/public/users/:userId",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "users", ":userId"],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Validate Data",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"field\": \"value\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/public/validate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "validate"]
+            }
+          }
+        },
+        {
+          "name": "Calculate - Add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"operation\": \"add\",\n  \"num1\": 10,\n  \"num2\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/public/calculate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "calculate"]
+            }
+          }
+        },
+        {
+          "name": "Calculate - Multiply",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"operation\": \"multiply\",\n  \"num1\": 10,\n  \"num2\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/public/calculate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "calculate"]
+            }
+          }
+        },
+        {
+          "name": "Receive Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"user.created\",\n  \"data\": {\n    \"userId\": 123,\n    \"name\": \"John Doe\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/public/webhook/receive",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "webhook", "receive"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}
